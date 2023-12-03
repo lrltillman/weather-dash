@@ -9,7 +9,12 @@ let lon;
 function getCity(event) {
     event.preventDefault();
     cityName = cityNameEl.value;
-    console.log('you hit this function!')
+    // LOCAL STORAGE TO HAPPEN HERE
+    var cityHistory = JSON.parse(localStorage.getItem("location"));
+    cityHistory.push(cityName);
+    localStorage.setItem("location", JSON.stringify([cityHistory]));
+
+
     getGeolocation()
 
 
@@ -26,6 +31,7 @@ function getWeather() {
         })
         .then(function (data) {
 
+            console.log(data.list)
 
             //build two buttons here, one for today, one for future? each onclick has different for loop? or no?
 
@@ -33,17 +39,19 @@ function getWeather() {
 
             //need dayjs? possibly?
 
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 40; i += 8) {
                 var theDate = data.list[i].dt_txt;
                 var mainTemp = data.list[i].main.temp;
                 var humidLevel = data.list[i].main.humidity;
                 var windSpeed = data.list[i].wind.speed;
                 var weatherConditions = data.list[i].weather[0].description;
+                var weatherIcon = data.list[i].weather[0].icon;
                 const pageContent = document.createElement('div');
                 pageContent.innerHTML =
                     `<div id="dayBox">
+                    <img src="https://openweathermap.org/img/wn/${weatherIcon}@2x.png" alt="icon of todays weather conditions" id="iconImg" />
                     <h4>${theDate}</h4>
-        <h6>The temperature outside is ${mainTemp} ºF.</h6>
+        <h6>The temperature outside in ${cityName} is ${mainTemp} ºF.</h6>
         <h6>Weather conditions: ${weatherConditions}</h6>
         <h6>Humidity level: ${humidLevel}</h6>
         <h6>Wind speed: ${windSpeed} mph</h6>
