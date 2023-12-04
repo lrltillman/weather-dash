@@ -88,7 +88,6 @@ function getWeather() {
         <h6>Wind speed: ${windSpeed} mph</h6>
         </div>`
 
-                // displayDataContent.appendChild(pageContent);
             }
         })
         .catch(function (err) {
