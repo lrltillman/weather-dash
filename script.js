@@ -43,7 +43,7 @@ function callSavedCity(event) {
 }
 
 function getGeolocation() {
-    var requestGeo = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
+    var requestGeo = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
 
     fetch(requestGeo)
         .then(function (response) {
@@ -58,7 +58,7 @@ function getGeolocation() {
 }
 
 function getWeather() {
-    var requestWeather = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${API_KEY}`
+    var requestWeather = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${API_KEY}`
 
     fetch(requestWeather)
         .then(function (response) {
