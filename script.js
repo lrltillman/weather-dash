@@ -6,6 +6,7 @@ const cityDropDown = document.getElementById("cities");
 const goBtn = document.getElementById("goBtn");
 const searchBtn = document.getElementById("searchBtn");
 const displayDataContent = document.getElementById("container");
+const displayStorage = localStorage.getItem("location")
 let cityName;
 let lat;
 let lon;
@@ -13,8 +14,21 @@ let lon;
 searchBtn.addEventListener('click', getCity);
 
 function renderHistory() {
-    // display local storage array into dropdown el using for loop
+
+    if (!displayStorage) {
+        var noStorage = document.createElement("option");
+        noStorage.textContent = "No search history to display."
+        cityDropDown.appendChild(noStorage)
+    } else {
+        for (let i = 0; i < displayStorage.length; i++) {
+            var historyOption = document.createElement("option");
+            historyOption.textContent = displayStorage[i];
+            cityDropDown.appendChild(historyOption)
+        }
+    }
 }
+
+renderHistory()
 
 function getCity(event) {
 
@@ -22,10 +36,16 @@ function getCity(event) {
     event.preventDefault();
     cityName = cityNameEl.value;
     // LOCAL STORAGE TO HAPPEN HERE
-    // could use if statement 
+    // could use if statement
+
+
     var cityHistory = JSON.parse(localStorage.getItem("location")) || [];
-    cityHistory.push(cityName);
-    localStorage.setItem("location", JSON.stringify(cityHistory));
+
+    if (!cityHistory.includes(cityName)) {
+        cityHistory.push(cityName);
+        localStorage.setItem("location", JSON.stringify(cityHistory));
+    }
+
     getGeolocation()
 
 
@@ -36,7 +56,7 @@ goBtn.addEventListener('click', callSavedCity);
 function callSavedCity(event) {
     event.preventDefault();
 
-    cityName = cityDropDown.value;
+    cityName = searchedCity.value;
     console.log(cityName)
 
     getGeolocation()
