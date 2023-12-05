@@ -7,6 +7,7 @@ const goBtn = document.getElementById("goBtn");
 const searchBtn = document.getElementById("searchBtn");
 const displayDataContent = document.getElementById("container");
 const displayStorage = localStorage.getItem("location")
+var storageDisplay = JSON.parse(displayStorage)
 let cityName;
 let lat;
 let lon;
@@ -15,14 +16,14 @@ searchBtn.addEventListener('click', getCity);
 
 function renderHistory() {
 
-    if (!displayStorage) {
+    if (!storageDisplay) {
         var noStorage = document.createElement("option");
         noStorage.textContent = "No search history to display."
         cityDropDown.appendChild(noStorage)
     } else {
         for (let i = 0; i < displayStorage.length; i++) {
             var historyOption = document.createElement("option");
-            historyOption.textContent = displayStorage[i];
+            historyOption.textContent = storageDisplay[i];
             cityDropDown.appendChild(historyOption)
         }
     }
